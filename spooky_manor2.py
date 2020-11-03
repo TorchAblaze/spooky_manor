@@ -55,7 +55,7 @@ Enter 'quit' to exit the game.
                 else:
                     print("Hmm, I'm not sure what you mean.  Please enter a verb and a noun to interect with your surroundings.")
 
-    ending = "Enter 'quit' to quit, enter 'save' to save or enter 'restart' to restart."
+    ending = "Enter 'quit' to quit, enter 'save' to save or enter 'restart' to restart the game."
     
     @staticmethod
     def victory():
@@ -76,6 +76,7 @@ class Intro(Game):
         "DROP PARCEL":"That's not proper couriership :(",
         "EXIT EAST": Game.victory(),
         "EXIT WEST": Game.victory(),
+        "EXIT NORTH": 1,
     }
 
     intro = "\nYou stop your bicycle by a forbidding wrought-iron gate.\nA cobblestone path winds its way to the north.  To the east\nand west streatches a dark and lonely road.  It is raining.\n\nThe player starts the game wearing a ranincoat and riding a bike.\n"
@@ -95,11 +96,34 @@ class Intro(Game):
     def game_play(cls):
         super().game_play()
 
+
+class FrontDoor(Game):
+    commands = {
+        "KNOCK":"Nobody answers, but the door cracks open, seemingly on its own!",
+        "EXIT SOUTH": 0,
+    }
+    
+    intro = "You step up to Spooky Manor's imposing front door.  There is a brass knocker here."
+
+    # TODO: Add ENTER HOUSE exit option only if the player knocks on the door
+
+class Vestibule(Game):
+    commands = {
+        "GO NORTH":"And drip water all over the floor?  Perhaps it would be polite to hang up your raincoat?",
+        "EXAMINE COAT TREE":"It's currently empty",
+        "HANG COAT":"You hang your coat on the coat tree.",
+    }
+    
+    intro = "You are standing in a vestibule.  Rain drips from your coat onto the floor.  To the north is the manor's great hall.  There is a coat tree here."
+
+    # TODO: Add GREAT HALL exit option after player hangs raincoat, remove raincoat from inventory, and have the raincoat be dry if 
+
+
+rooms = {
+    0: Intro.game_play(),
+    1: FrontDoor.game_play(),
+    2: Vestibule.game_play(),
+}
+
 intro = Intro()
 intro.start_prompt()
-
-    
-    
-
-
-
