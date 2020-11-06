@@ -7,6 +7,7 @@ from dining_room import DiningRoom
 from lounge import Lounge
 from kitchen import Kitchen
 from dark_cellar import DarkCellar
+from library import Library
 
 inventory = ['Raincoat (worn)', 'Padlock key', 'Parcel']
 
@@ -46,21 +47,19 @@ rooms = {
     6: Lounge(),
     7: Kitchen(),
     8: DarkCellar(),
-    # 9: DarkCellarCont(),
-    # 10: Library(),
-    # 11: SecretStudy(),
-    # 12: BilliardRoom(),
-    # 13: Conservatory(),
-    # 14: Garden(),
-    # 15: ReflectingPool(),
-    # 16: HedgeMaze(),
-    # 17: Graveyard(),
-    # 18: FamilyCrypt(),
-    # 19: FamilyCryptCont(),
-    # 20: Hallway(),
-    # 21: Attic(),
-    # 22: ServantsQuarters(),
-    # 23: MasterSuite()
+    9: Library(),
+    # 10: SecretStudy(),
+    # 11: BilliardRoom(),
+    # 12: Conservatory(),
+    # 13: Garden(),
+    # 14: ReflectingPool(),
+    # 15: HedgeMaze(),
+    # 16: Graveyard(),
+    # 17: FamilyCrypt(),
+    # 18: Hallway(),
+    # 19: Attic(),
+    # 20: ServantsQuarters(),
+    # 21: MasterSuite(),
 }
 
 print("\nWELCOME TO SPOOKY MANOR...")
