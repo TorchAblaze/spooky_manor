@@ -4,11 +4,15 @@ class FrontDoor:
         "location":1,
     }
     KNOCK = {
-        "message":"Nobody answers, but the door cracks open, seemingly on its own!  You push open the door and enter the dimly lit manor as thunder crackles in the distance.",
+        "message":"Nobody answers, but the door cracks open, seemingly on its own!  You push the door inward and enter the dimly lit manor as thunder crackles in the distance.",
         "location":3
     }
     commands = {
         "KNOCK":KNOCK,
+        "KNOCK DOOR":KNOCK,
+        "KNOCK ON DOOR":KNOCK,
+        "SOUTH":SOUTH,
+        "GO SOUTH":SOUTH,
         "EXIT SOUTH": SOUTH,
         "ENTER DOOR":"It's locked.",
         "OPEN DOOR":"It's locked.",

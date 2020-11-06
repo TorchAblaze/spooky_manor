@@ -24,7 +24,9 @@ class Gate:
         "EXAMINE COBBLESTONE":"The neglected path looks hazardous to your bike's fragile tires.",
         # "EXIT EAST": ,
         # "EXIT WEST": ,
-        "EXIT NORTH": NORTH,
+        "EXIT NORTH":NORTH,
+        "NORTH":NORTH,
+        "GO NORTH":NORTH,
     }
 
     intro = "\nTHE GATE:\nYou stop your bicycle by a forbidding wrought-iron gate.\nA cobblestone path winds its way to the north.  To the east\nand west streatches a dark and lonely road.  It is raining.\n\nYou are wearing a ranincoat and riding a bike.\n"
