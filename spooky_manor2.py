@@ -1,15 +1,5 @@
-from navigation import Navigation
-from gate import Gate
-from front_door import FrontDoor
-from vestibule import Vestibule
-from great_hall import GreatHall
-from dining_room import DiningRoom
-from lounge import Lounge
-from kitchen import Kitchen
-from dark_cellar import DarkCellar
-from library import Library
-
-inventory = ['Raincoat (worn)', 'Padlock key', 'Parcel']
+from room import Room
+import locations
 
 def show_help():
     print("""
@@ -21,14 +11,11 @@ and a noun that you would like to interact with.
 
 Enter 'inventory' to view your inventory.
 Enter 'score' to view your point total.
+Enter 'location' to view your current location.
 Enter 'help' for this help.
 Enter 'save' to save the game.
 Enter 'quit' to exit the game.
 """)
-
-def take(self, item):
-    pass
-    # inventory.append(item)
 
 ending = "Enter 'quit' to quit, enter 'save' to save or enter 'restart' to restart the game."
     
@@ -37,17 +24,56 @@ ending = "Enter 'quit' to quit, enter 'save' to save or enter 'restart' to resta
 #     return end 
     # points += 5
 
-
+GATE = Room(
+    "Gate",
+    locations.GATE_COMMANDS,
+    locations.GATE_INTRO
+    )
+FRONT_DOOR = Room(
+    "Front Door",
+    locations.FRONT_DOOR_COMMANDS,
+    locations.FRONT_DOOR_INTRO
+    )
+VESTIBULE = Room(
+    "Vestibule",
+    locations.VESTIBULE_COMMANDS,
+    locations.VESTIBULE_INTRO
+    )
+GREAT_HALL = Room(
+    "Great Hall",
+    locations.GREAT_HALL_COMMANDS,
+    locations.GREAT_HALL_INTRO
+)
+DINING_ROOM = Room(
+    "Dining Room",
+    locations.DINING_ROOM_COMMANDS,
+    locations.DINING_ROOM_INTRO
+)
+LOUNGE = Room(
+    "Lounge",
+    locations.LOUNGE_COMMANDS,
+    locations.LOUNGE_INTRO
+)
+KITCHEN = Room(
+    "Kitchen",
+    locations.KITCHEN_COMMANDS,
+    locations.KITCHEN_INTRO
+)
+DARK_CELLAR = Room(
+    "Dark Cellar",
+    locations.DARK_CELLAR_COMMANDS,
+    locations.DARK_CELLAR_INTRO
+)
 rooms = {
-    1: Gate(),
-    2: FrontDoor(),
-    3: Vestibule(),
-    4: GreatHall(),
-    5: DiningRoom(),
-    6: Lounge(),
-    7: Kitchen(),
-    8: DarkCellar(),
-    9: Library(),
+    1: GATE,
+    2: FRONT_DOOR,
+    3: VESTIBULE,
+    4: GREAT_HALL,
+    5: DINING_ROOM,
+    6: LOUNGE,
+    7: KITCHEN,
+    8: DARK_CELLAR,
+    # 9: Library(),
     # 10: SecretStudy(),
     # 11: BilliardRoom(),
     # 12: Conservatory(),
@@ -61,31 +87,61 @@ rooms = {
     # 20: ServantsQuarters(),
     # 21: MasterSuite(),
 }
-
-print("\nWELCOME TO SPOOKY MANOR...")
+game_name = "SPOOKY MANOR"
+print(f"\nWELCOME TO:\n{game_name}...")
 show_help()
-print(Gate.intro)
 
 player_location = 1
 points = 0
 
+print(rooms[player_location].intro)
+
 while True:
-    class_name = rooms[player_location]
+    room_name = rooms[player_location]
     command = input("\n >  ").upper()
     try:
-        if type(class_name.commands[command]) == dict:
-            for key, value in class_name.commands[command].items():
-                if key == "message":
-                    print(class_name.commands.get(command)["message"])
+        result = room_name.commands
+        if type(result[command]) == dict:
+            for key, value in result[command].items():
+                if key == "restriction in":
+                    if value in locations.inventory:
+                        print(result.get(command)["message1"])
+                    elif value not in locations.inventory:
+                        print(result.get(command)["message2"])
+                        player_location = result.get(command)["new location"]
+                        room_name = rooms[player_location]
+                        print(room_name.intro)
+                    continue
+                elif key == "restriction out":
+                    if value not in locations.inventory:
+                        print(result.get(command)["message1"])
+                    elif value in locations.inventory:
+                        print(result.get(command)["message2"])
+                        player_location = result.get(command)["new location"]
+                        room_name = rooms[player_location]
+                        print(room_name.intro)
+                    continue
+                elif key == "message":
+                    print(result.get(command)["message"])
                 elif key == "points":
-                    points += class_name.commands.get(command)["points"]
+                    points += result.get(command)["points"]
+                elif key == "add":
+                    if value not in locations.inventory:
+                        locations.inventory.append(value)
+                    elif value in locations.inventory:
+                        print("You already have that.")
+                elif key == "remove":
+                    if value in locations.inventory:
+                        locations.inventory.remove(value)
+                    elif value not in locations.inventory:
+                        print("You don't have that.")
                 elif key == "location":
-                    player_location = class_name.commands.get(command)["location"]
-                    class_name = rooms[player_location]
-                    print(class_name.intro)
-            continue
-        elif command in class_name.commands.keys():
-            print(class_name.commands[command])    
+                    player_location = result.get(command)["location"]
+                    room_name = rooms[player_location]
+                    print(room_name.intro)
+                continue
+        elif command in result.keys():
+            print(result[command])    
             continue
     except KeyError as err:
         if command == 'HELP':
@@ -95,16 +151,19 @@ while True:
             print("Score:", points)
             continue
         elif command == 'INVENTORY':
-            for item in inventory:
+            for item in locations.inventory:
                 print(item)
                 continue
         elif command == 'SAVE':
             pass  # Find way to save game
         elif command == 'LOOK':
-            print(class_name.intro)
+            print(room_name.intro)
             continue
         elif command == 'QUIT':
             break
+        elif command == 'LOCATION':
+            room_name.print_location()
+            continue
         elif command == 'RESTART':
             restart = input("Are you sure you want to restart the game? ('yes' or 'no')\n >  ")
             if restart == 'YES':
