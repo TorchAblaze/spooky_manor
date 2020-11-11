@@ -4,7 +4,7 @@ class Library:
         "location":11,
     }
     SOUTH = {
-        "message":"You head south through the library",
+        "message":"You head south through the secret door of the sarcophagus.",
         "points":10,
         "location":10,
     }
@@ -22,17 +22,17 @@ class Library:
         "NORTH":NORTH,
         "EXIT NORTH":NORTH,
         "GO NORTH":NORTH,
-        # "SOUTH":SOUTH,  # TODO: Only available if player takes MYSTERIES OF ANCIENT EGYPT
-        # "EXIT SOUTH":SOUTH,
-        # "GO SOUTH":SOUTH,
+        "SOUTH":SOUTH,  # TODO: Only available if player takes MYSTERIES OF ANCIENT EGYPT
+        "EXIT SOUTH":SOUTH,
+        "GO SOUTH":SOUTH,
         "WEST":WEST,
         "EXIT WEST":WEST,
         "GO WEST":WEST,
     }
 
-    intro = "The library is home to many old books.  An Egyptian\nsarcophagus stands in the corner.  Exits are to the north\nand west"
+    intro = "\nLIBRARY:\nThe library is home to many old books.  An Egyptian\nsarcophagus stands in the corner.  Exits are to the north\nand west."
 
     # TODO: if player takes HERBALISM FOR BEGINNERS, they should be able to read it as long as it's in their inventory
-    # TODO: Items: HERBALISM FOR BEGINNERS
+    # TODO: ITEMS: HERBALISM FOR BEGINNERS
     # TODO: VAMPIRE: If VAMPIRE picks up DANTE'S 'INFERNO': You're immolated in the fire and turn to ash.  THE END.
     # EXITS: NORTH: BILLARD ROOM, SOUTH: SECRET STUDY (if open), WEST: GREAT HALL
